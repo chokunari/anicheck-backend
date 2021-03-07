@@ -5,6 +5,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+// import script files
+const getOgp = require('./getOgp');
+
 // define the Express app
 const app = express();
 
@@ -23,30 +26,21 @@ app.use(cors());
 // log HTTP requests
 app.use(morgan('combined'));
 
-// アニメ公式サイトURLをfrontendから受け取りOGPの画像srcを取得、frontendに返却する。
-app.get('/', (req, res) => {
-  const qs = questions.map(q => ({
-    id: q.id,
-    title: q.title,
-    description: q.description,
-    answers: q.answers.length,
-  }));
-  res.send(qs);
+/*
+// 雛形
+app.get('/getOgp/:officialURL', (req, res) => {
+  res.send(imgSrc);
 });
+*/
 
-// insert a new question
-app.post('/', (req, res) => {
-  const {title, description} = req.body;
-  const newQuestion = {
-    id: questions.length + 1,
-    title,
-    description,
-    answers: [],
-  };
-  questions.push(newQuestion);
-  res.status(200).send();
+// アニメ公式サイトURLをfrontendからjsonで受け取りOGPの画像srcを取得、frontendに返却する。
+app.post('/getOgp', async (req, res) => {
+  const reqURL = req.body.reqURL;
+  const data = {imgSrc: await getOgp.getImgSrc(reqURL)};
+  //const data = {imgSrc: 'https://yurucamp.jp/camping/content/themes/ycp-pc/ogp_portal.jpg'};
+  //console.log('これはindex.jsのdata:' + data.imgSrc);
+  res.status(200).send(data);
 });
-
 
 // start the server
 app.listen(4000, () => {
