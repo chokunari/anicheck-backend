@@ -39,8 +39,7 @@ app.post('/getOgp', async (req, res) => {
   //const data = {imgSrc: 'https://yurucamp.jp/camping/content/themes/ycp-pc/ogp_portal.jpg'};
   res.status(200).send(data);
 });
-
 // start the server
-app.listen(4000, () => {
-  console.log('listening on port 4000');
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`listening on port ${process.env.PORT || 4000}`);
 });
