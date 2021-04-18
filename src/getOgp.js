@@ -26,18 +26,11 @@ const getOgpData = async officialURL => {
                         imgSrc: imgSrc,
                         description: description
                       };
-            //if (meta.getAttribute('property') === 'og:image'){
-            //    //console.log('これは画像URL:' + meta.getAttribute('content'));
-            //    imgSrc = meta.getAttribute('content');
-            //}else{
-            //    //console.log('失敗やね');
-            //}
         });
     })
     .catch(error => {
         console.log(error);
     });
-    console.log(ogpData);
     //Promiseを返す
     return new Promise((resolve, reject) => {
         resolve(ogpData);
