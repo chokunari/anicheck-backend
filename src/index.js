@@ -35,8 +35,7 @@ app.get('/getOgp/:officialURL', (req, res) => {
 
 // アニメ公式サイトURLをfrontendからjsonで受け取りOGPの画像srcを取得、frontendに返却する。
 app.post('/getOgp', async (req, res) => {
-  const data = {imgSrc: await getOgp.getImgSrc(req.body.reqURL)};
-  //const data = {imgSrc: 'https://yurucamp.jp/camping/content/themes/ycp-pc/ogp_portal.jpg'};
+  const data = await getOgp.getOgpData(req.body.reqURL);
   res.status(200).send(data);
 });
 // start the server
